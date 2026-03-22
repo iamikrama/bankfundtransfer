@@ -10,7 +10,6 @@ target/
 target/
 *.log
 .env
-
 ### STS ###
 .apt_generated
 .classpath

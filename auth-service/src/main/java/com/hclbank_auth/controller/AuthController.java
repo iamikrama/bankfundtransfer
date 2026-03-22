@@ -4,6 +4,7 @@ import com.hclbank_auth.dto.*;
 import com.hclbank_auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +31,11 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @FeignClient(name = "account-service")
+    public interface AccountServiceClient {
+        @PostMapping("/internal/accounts/create")
+        void createAccount(@RequestBody CreateAccountRequest req);
     }
 }
